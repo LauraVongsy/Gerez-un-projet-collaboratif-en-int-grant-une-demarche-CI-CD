@@ -43,6 +43,7 @@ jobs:
           node-version: '18'
 
       - name: Installer les dépendances frontend
+        working-directory: front
         run: npm install
 
       - name: Lancer les tests frontend avec coverage

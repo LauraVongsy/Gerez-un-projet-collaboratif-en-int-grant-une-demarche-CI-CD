@@ -44,10 +44,10 @@ jobs:
         run: npm install
 
       - name: Lancer les tests frontend avec coverage
-        run: npm test -- --coverage
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
 
       - name: Upload rapport de coverage frontend
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report-frontend
-          path: coverage
+          path: coverage/bobapp

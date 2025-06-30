@@ -68,7 +68,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t lauravongsy/bobapp-back:latest .
+        run: docker build -t lauravongsy/bobapp-back:latest ./back
 
       - name: Push Docker image to Docker Hub
         run: docker push lauravongsy/bobapp-back:latest
@@ -112,7 +112,7 @@ jobs:
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
         - name: Build Docker image
-          run: docker build -t lauravongsy/bobapp-front:latest .
+          run: docker build -t lauravongsy/bobapp-front:latest ./front
 
         - name: Push Docker image to Docker Hub
           run: docker push lauravongsy/bobapp-front:latest

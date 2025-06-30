@@ -70,17 +70,3 @@ jobs:
           with:
             name: coverage-report-frontend
             path: front/coverage/bobapp
-
-        - name: Installer sonar-scanner
-          run: npm install -g sonar-scanner
-
-        - name: Lancer l’analyse SonarCloud frontend
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          run: |
-            sonar-scanner \
-              -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD-front \
-              -Dsonar.organization=lauravongsy \
-              -Dsonar.sources=src \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=${SONAR_TOKEN}

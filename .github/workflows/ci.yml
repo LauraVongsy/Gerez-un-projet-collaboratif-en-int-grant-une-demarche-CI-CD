@@ -55,3 +55,12 @@ jobs:
         with:
           name: coverage-report-frontend
           path: front/coverage/bobapp
+  
+      - name: Installer sonar-scanner
+        run: npm install -g sonar-scanner
+
+      - name: Lancer l’analyse SonarCloud
+        run: sonar-scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+

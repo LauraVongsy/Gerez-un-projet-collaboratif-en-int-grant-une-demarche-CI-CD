@@ -23,7 +23,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-          
+
       - name: Build et tests Maven avec JaCoCo
         working-directory: back
         run: mvn clean verify
@@ -52,6 +52,26 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
+      
+  docker-build-push-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: back  
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t lauravongsy/bobapp-back:latest .
+
+      - name: Push Docker image to Docker Hub
+        run: docker push lauravongsy/bobapp-back:latest
   frontend:
       runs-on: macos-latest
       needs: backend
@@ -77,3 +97,22 @@ jobs:
           with:
             name: coverage-report-frontend
             path: front/coverage/bobapp
+  docker-build-push-frontend:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: front  
+      steps:
+        - uses: actions/checkout@v4
+
+        - name: Log in to Docker Hub
+          uses: docker/login-action@v3
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+        - name: Build Docker image
+          run: docker build -t lauravongsy/bobapp-back:latest .
+
+        - name: Push Docker image to Docker Hub
+          run: docker push lauravongsy/bobapp-back:latest

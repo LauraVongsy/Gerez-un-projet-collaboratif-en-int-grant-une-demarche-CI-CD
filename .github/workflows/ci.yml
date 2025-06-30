@@ -47,7 +47,7 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
   frontend:
       runs-on: macos-latest
       needs: backend

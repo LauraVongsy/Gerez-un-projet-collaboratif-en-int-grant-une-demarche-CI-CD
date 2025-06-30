@@ -45,42 +45,42 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
 
-    frontend:
-    runs-on: macos-latest
-    needs: backend
-    defaults:
-      run:
-        working-directory: front
-    steps:
-      - uses: actions/checkout@v4
+  frontend:
+      runs-on: macos-latest
+      needs: backend
+      defaults:
+        run:
+          working-directory: front
+      steps:
+        - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+        - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '18'
 
-      - name: Installer les dépendances frontend
-        run: npm install
+        - name: Installer les dépendances frontend
+          run: npm install
 
-      - name: Lancer les tests frontend avec coverage
-        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+        - name: Lancer les tests frontend avec coverage
+          run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
-      - name: Upload rapport de coverage frontend
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report-frontend
-          path: front/coverage/bobapp
+        - name: Upload rapport de coverage frontend
+          uses: actions/upload-artifact@v4
+          with:
+            name: coverage-report-frontend
+            path: front/coverage/bobapp
 
-      - name: Installer sonar-scanner
-        run: npm install -g sonar-scanner
+        - name: Installer sonar-scanner
+          run: npm install -g sonar-scanner
 
-      - name: Lancer l’analyse SonarCloud frontend
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD-front \
-            -Dsonar.organization=lauravongsy \
-            -Dsonar.sources=src \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${SONAR_TOKEN}
+        - name: Lancer l’analyse SonarCloud frontend
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          run: |
+            sonar-scanner \
+              -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD-front \
+              -Dsonar.organization=lauravongsy \
+              -Dsonar.sources=src \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=${SONAR_TOKEN}

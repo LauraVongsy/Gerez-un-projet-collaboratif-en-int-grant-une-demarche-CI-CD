@@ -20,21 +20,27 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-
-      - name: Build et analyse Sonar backend
-        working-directory: back
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-             -Dsonar.projectKey=ton_projectKey_backend \
-             -Dsonar.organization=ton_organisation \
-             -Dsonar.host.url=https://sonarcloud.io
-
       - name: Upload rapport JaCoCo
         uses: actions/upload-artifact@v4
         with:
           name: jacoco-report-backend
           path: back/target/site/jacoco
+      - name: Cache SonarQube packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
 
   frontend:
     runs-on: macos-latest

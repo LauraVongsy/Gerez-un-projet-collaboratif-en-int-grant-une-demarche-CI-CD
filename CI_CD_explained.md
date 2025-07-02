@@ -73,62 +73,62 @@ Actuellement : Random generator = new Random();
 Exemple à privilégier : private final Random generator = new Random();
 
 - Maintenabilité : 8 issues (note A)
-Utilisation de types génériques avec des wildcards (<?>) dans les types de retour
+1- Utilisation de types génériques avec des wildcards (<?>) dans les types de retour
 
 Problème : Cela complique la lisibilité et la compréhension du code.
 
 Amélioration proposée : Préciser le type générique utilisé pour favoriser la clarté et l’expressivité.
 
-Implémentation du pattern Singleton détectée
+2- Implémentation du pattern Singleton détectée
 
 Problème : L’usage du Singleton peut créer des effets de bord et rendre le code difficile à tester ou à faire évoluer.
 
 Amélioration proposée : Réévaluer la nécessité du Singleton. Si nécessaire, s'assurer qu'il est bien thread-safe et documenté.
 
-Ordre des modificateurs non conforme à la spécification Java
+3- Ordre des modificateurs non conforme à la spécification Java
 
 Problème : Un ordre incohérent des modificateurs (ex. private static final) nuit à la lisibilité.
 
 Amélioration proposée : Respecter l’ordre standard défini par la Java Language Specification.
 
-Exception URISyntaxException déclarée mais jamais levée
+4- Exception URISyntaxException déclarée mais jamais levée
 
 Problème : Ceci induit en erreur les développeurs qui pensent que l’exception peut être lancée.
 
 Amélioration proposée : Supprimer la déclaration throws URISyntaxException si elle est inutile.
 
-Champ nommé joke dans la classe Joke
+5- Champ nommé joke dans la classe Joke
 
 Problème : Le champ porte le même nom que la classe, ce qui peut prêter à confusion.
 
 Amélioration proposée : Renommer le champ en jokeText, jokeContent ou autre nom plus explicite.
 
-Champs joke et response publics
+6- Champs joke et response publics
 
 Problème : Violation du principe d'encapsulation.
 
 Amélioration proposée : Déclarer les champs en private, puis exposer des accesseurs (getters/setters) si nécessaire.
 
-Méthode vide sans explication
+7- Méthode vide sans explication
 
 Problème : Une méthode vide sans commentaire donne l’impression que le code est incomplet ou oublié.
 
 Amélioration proposée : Ajouter un commentaire // méthode volontairement vide ou lever une exception throw new UnsupportedOperationException().
 
-Constantes non marquées comme static final
+8- Constantes non marquées comme static final
 
 Problème : Une bonne pratique en Java est d’utiliser static final pour les constantes.
 
 Amélioration proposée : Marquer les champs constants en private static final.
 
 - Sécurité : 0 vulnérabilité détectée, 2 Security Hotspots
-[🔸] Weak Cryptography — Utilisation d’un générateur de nombres pseudo-aléatoires (Random)
+1- Weak Cryptography — Utilisation d’un générateur de nombres pseudo-aléatoires (Random)
 
 Problème : La classe java.util.Random ne garantit pas une bonne entropie pour les usages sensibles (ex. mots de passe, tokens).
 
 Amélioration proposée : Remplacer par SecureRandom si l'aléa est utilisé dans un contexte de sécurité. Si ce n’est pas le cas (par exemple : pour une blague aléatoire), ajouter un commentaire justifiant son usage non critique.
 
-[🔹] Insecure Configuration — Fonctionnalité de debug activée
+2- Insecure Configuration — Fonctionnalité de debug activée
 
 Problème : Le mode debug activé en production peut exposer des informations sensibles (routes, tokens, exceptions internes…).
 

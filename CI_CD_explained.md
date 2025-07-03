@@ -80,10 +80,8 @@ Problème : Cela complique la lisibilité et la compréhension du code.
 Amélioration proposée : Préciser le type générique utilisé pour favoriser la clarté et l’expressivité.
 
 2- Implémentation du pattern Singleton détectée
-
-Problème : L’usage du Singleton peut créer des effets de bord et rendre le code difficile à tester ou à faire évoluer.
-
-Amélioration proposée : Réévaluer la nécessité du Singleton. Si nécessaire, s'assurer qu'il est bien thread-safe et documenté.
+Problème : Le Singleton peut rendre le code difficile à tester et provoquer des erreurs s’il est mal utilisé.
+Amélioration proposée : Vérifier s’il est vraiment utile et s'assurer qu’il fonctionne correctement en toutes circonstances.
 
 3- Ordre des modificateurs non conforme à la spécification Java
 
@@ -122,12 +120,10 @@ Problème : Une bonne pratique en Java est d’utiliser static final pour les co
 Amélioration proposée : Marquer les champs constants en private static final.
 
 - Sécurité : 0 vulnérabilité détectée, 2 Security Hotspots
+
 1- Weak Cryptography — Utilisation d’un générateur de nombres pseudo-aléatoires (Random)
-
-Problème : La classe java.util.Random ne garantit pas une bonne entropie pour les usages sensibles (ex. mots de passe, tokens).
-
-Amélioration proposée : Remplacer par SecureRandom si l'aléa est utilisé dans un contexte de sécurité. Si ce n’est pas le cas (par exemple : pour une blague aléatoire), ajouter un commentaire justifiant son usage non critique.
-
+Problème : Random n’est pas adapté aux usages sensibles (comme les tokens ou mots de passe).
+Amélioration proposée : Utiliser SecureRandom si nécessaire, ou justifier l’usage de Random si l’aléa n’est pas critique (ex. blague aléatoire).
 2- Insecure Configuration — Fonctionnalité de debug activée
 
 Problème : Le mode debug activé en production peut exposer des informations sensibles (routes, tokens, exceptions internes…).
@@ -139,14 +135,16 @@ Amélioration proposée : Vérifier que les logs de debug sont désactivés dans
 ## Retours utilisateurs & Recommandations
 
 - *"Je mets une étoile car je ne peux pas en mettre zéro ! Impossible de poster une suggestion de blague, le bouton tourne et fait planter le navigateur." (1 étoile sur 5)*  
-  ➤ *Amélioration proposée* : Ajouter un test d'intégration front pour ce bouton, identifier la cause du crash (ex. : boucle infinie, erreur JS), corriger et monitorer le comportement avec un outil comme Sentry.
+  ➤ *Amélioration proposée* : Ajouter un test d'intégration front pour ce bouton, identifier la cause du bug (ex. : boucle infinie, erreur JS), et le corriger.
 
 - *"#BobApp j'ai remonté un bug sur le post de vidéo il y a deux semaines et il est encore présent ! Les devs vous faites quoi ?" (2 étoiles sur 5)*  
-  ➤ *Amélioration proposée* : Mettre en place un système de gestion des tickets utilisateurs (par ex. GitHub Issues avec labels de priorité), avec un **SLA** clair pour la résolution des bugs critiques.
+  ➤ *Amélioration proposée* : Mettre en place un système de gestion des tickets utilisateurs.
 
 - *"Ça fait une semaine que je ne reçois plus rien, j'ai envoyé un email il y a 5 jours mais toujours pas de nouvelles..." (1 étoile sur 5)*  
-  ➤ *Amélioration proposée* : Ajouter une alerte dans la CI/CD si une tâche planifiée (notifications, envois de mails) échoue. Prévoir une **communication automatisée** (accusé de réception + délai estimé de réponse).
+  ➤ *Amélioration proposée* : Ajouter une alerte dans la CI/CD si une tâche planifiée (notifications, envois de mails) échoue. Mettre en place un système de gestion des tickets utilisateurs.
+
 
 - *"J'ai supprimé ce site de mes favoris ce matin, dommage, vraiment dommage." (2 étoiles sur 5)*  
-  ➤ *Amélioration proposée* : Restaurer la confiance en publiant un changelog, en annonçant la mise en place de la CI/CD et en sollicitant à nouveau les utilisateurs avec des feedbacks sur les corrections apportées.
+  ➤ *Amélioration proposée* : Restaurer la confiance en publiant un changelog avec tous les correctifs et les améliorations et en sollicitant à nouveau les utilisateurs avec des feedbacks sur les corrections apportées.
+
 

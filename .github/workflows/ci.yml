@@ -48,7 +48,7 @@ jobs:
           name: jacoco-report-backend
           path: back/target/site/jacoco
     
-      - name: Build and analyze
+      - name: Build and analyse
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=LauraVongsy_Gerez-un-projet-collaboratif-en-int-grant-une-demarche-CI-CD
@@ -61,16 +61,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
+      - name: Log in au Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image
+      - name: Build de l'image backend
         run: docker build -t lauravongsy/bobapp-back:latest .
 
-      - name: Push Docker image to Docker Hub
+      - name: Push l'image Docker vers Docker Hub
         run: docker push lauravongsy/bobapp-back:latest
   frontend:
       runs-on: macos-latest
@@ -105,14 +105,14 @@ jobs:
       steps:
         - uses: actions/checkout@v4
 
-        - name: Log in to Docker Hub
+        - name: Log in au Docker Hub
           uses: docker/login-action@v3
           with:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-        - name: Build Docker image
+        - name: Build de l'image Docker
           run: docker build -t lauravongsy/bobapp-front:latest .
 
-        - name: Push Docker image to Docker Hub
+        - name: Push l'image Docker vers Docker Hub
           run: docker push lauravongsy/bobapp-front:latest
